@@ -1,0 +1,103 @@
+# Project Agent Guidelines & Mission (AGENTS.md)
+
+Welcome! You are an AI coding assistant operating inside this repository. This guide defines the master development policies, project goals, architectural conventions, and safety boundaries for the codebase.
+
+To ensure success and seamless integration of your changes, you must strictly adhere to these guidelines.
+
+---
+
+## 1. Project Goal & Core Mission
+
+### The Goal
+The primary goal of this project is to maintain and develop **The Tiered Onboarding Framework**. This framework is an open-source, modular, and customizable ruleset template system that enables software engineering teams, system administrators, and organizations to quickly configure and deploy secure, interactive, and platform-compliant coding assistant harnesses.
+
+### The Problem Solved
+Coding assistants must operate safely across diverse environments—from physical high-performance compute (HPC) clusters to enterprise cloud VPCs and Kubernetes federations. This project provides a hierarchical set of template bylaws that establish:
+1.  **Tier 1 (Organization General)**: Core safety, interaction trust, data security, and compliance constitutions.
+2.  **Tier 2 (Platform Environments)**: Resource default queues, nodes, filesystems, and repository mirrors.
+3.  **Tier 3 (Team Preferences)**: Language styles, Git read-only boundary controls, and explicit platform overrides for team isolation.
+4.  **Tier 4 (Deployment Workflows)**: Secure, proxy-aware manual provisioning guides with interactive SSO authentication.
+5.  **Master Interviewer Prompt**: An interactive setup prompter that empty agents can run to interview human administrators and generate filled, personalized rules files.
+
+---
+
+## 2. Tiered Framework Technical Specifications
+
+When editing or extending the templates inside the `templates/` directory, ensure they satisfy these architectural specifications:
+
+### Tier 1: Organization General (`org_general_template.md`)
+-   **Interactive Safety**: Must enforce strict dual-factor validation for file-system deletions and recursive commands.
+-   **Honesty & Trust Relationship**: Mandates explicit reporting of failures, skipped steps, and uncertainties. No model hallucinations or unverified completion claims.
+-   **Sensitive Data Boundaries**: Establishes customizable compliance rules (e.g. HIPAA, PII, GDPR, SOC2) and prohibits hardcoding or committing credentials.
+
+### Tier 2: Compute Environment (`platform_template.md`)
+-   **Node Segregation**: Clearly separates interactive/login nodes from heavy compute environments.
+-   **Scheduler Resource Mapping**: Provides abstract submission configurations for various schedulers (e.g., SLURM, Kubernetes, PBS, LSF) covering CPUs, memory, and wall-time limits.
+-   **Filesystem Quotas**: Maps home directory limitations and enforces cache/temp redirection rules off restricted system blocks.
+
+### Tier 3: Team Preferences & Overrides (`team_preferences_template.md`)
+-   **Git Restrictions**: Establishes strict read-only research permissions (`git status`, `git diff`, `git log`) and forbids automatic staging/committing.
+-   **Platform Override Mechanism**: Contains explicit configuration blocks allowing teams to override or isolate temporary directories (e.g. forcing group-locked scratch paths) instead of using globally shared platform temp directories.
+-   **Technical Idioms**: Outlines sourcing-safe scripting, dynamic sandboxing (`mktemp`), safe symlink cleanup (`unlink`), and Conventional Commit conventions.
+
+### Tier 4: Environment Provisioning (`deployment_workflow_template.md`)
+-   **Proxy & Mirror Setup**: Instructs on configuring environments behind enterprise firewalls using local proxy mirrors.
+-   **SSO Compliance**: Detail-oriented walkthrough for setting up native interactive browser/auth-code SSO logins to completely prevent raw API key fallbacks.
+-   **Quota Preservation**: Configures symbolic links from group storage directories back to the home directory for persistent rules and history storage.
+
+### Master Interviewer Prompter (`onboarding_interviewer.md`)
+-   **Profiling Diagnostic**: Guides an empty agent to first profile the organization safety scale, compute platform type, and proxy requirements.
+-   **Selective Interviewing**: Walking the user dynamically only through the template tiers that match their specific profile (skipping irrelevant cluster blocks for cloud users).
+-   **Generation Output**: Automatically compiles and outputs the final files based on the responses.
+
+---
+
+## 3. Future Roadmap & Upcoming Milestones
+
+Any future development and agent workflows on this project should focus on the following key milestones:
+
+### Milestone 1: Expanding Platform Environments (Tier 2 Expansion)
+-   Extend `platform_template.md` to provide pre-configured blocks for modern serverless architectures (AWS Fargate, Google Cloud Run) and standard Docker-compose developer setups.
+
+### Milestone 2: Multi-Language Package Manager Support (Tier 4 Expansion)
+-   Extend `deployment_workflow_template.md` to support seamless proxy-aware configurations across multiple ecosystem tools (Poetry, pipenv, Cargo, NPM, Maven, and Go Modules).
+
+### Milestone 3: Dynamic Onboarding Interviewer Enhancements
+-   Optimize `onboarding_interviewer.md` for different LLM provider styles (Claude, Gemini, GPT-4), ensuring robust parsing and prompt extraction.
+
+### Milestone 4: Automated Output Validation Framework
+-   Develop a lightweight test script (e.g. bash or python) that automates the verification of generated outputs. It should load the templates, mock the interviewer's output, and assert that the generated rules files contain valid Markdown/YAML structures with no empty placeholder brackets.
+
+---
+
+## 4. No Institutional Metadata Leakage
+This is a generic, open-source project intended to be shared publicly across various organizations.
+-   **Strict Generic Standard**: Never commit any specific institutional metadata, corporate mirror URLs, private cloud project IDs, private domains, or proprietary hostnames to the `templates/` folder or the documentation.
+-   **Placeholder Rule**: Always utilize uppercase square brackets for configuration variables, e.g. `[ORGANIZATION_NAME]`, `[INTERNAL_PROXY_URL]`, or `[TEMP_DIR_DEFAULT]`.
+-   **Pre-Commit Verification**: Before completing any modifications or additions to the templates, run a verification grep to scan for any unauthorized proprietary keywords specific to your local installation:
+    ```bash
+    # Scan for your local organization-specific sensitive keywords:
+    grep -rE "([LOCAL_PROPRIETARY_KEYWORD_1]|[LOCAL_PROPRIETARY_KEYWORD_2])" templates/
+    ```
+
+---
+
+## 5. Strict Git & Workspace Boundaries
+-   **No Autonomous Staging/Commits**: You are strictly forbidden from automatically executing any Git commands that modify the index, repository history, or workspace state (such as `git add`, `git stage`, `git commit`, `git push`, or `git checkout`).
+-   **Manual Verification Block**: Always present the precise Git commands as copy-pasteable blocks in your chat response for the developer to review and execute themselves.
+-   **No Autonomous Recovery**: If a change was staged in error, stop immediately, report the status, and present the manual recovery commands (e.g. `git restore --staged <file>`). Do not attempt to fix or reset files autonomously.
+-   **Authorized Read-Only Research**: You are fully permitted to run `git status`, `git diff`, and `git log` to research context.
+
+---
+
+## 6. Storage & Safe Scripting Conventions
+-   **No Sourced Exit Flags**: Never use global safety flags like `set -e` or `set -u` in scripts intended to be sourced (e.g., shell profiles or environment scripts). Sourcing a script with these active will immediately kill the active developer terminal session upon any sub-command returning non-zero. Use manual conditional checks instead.
+-   **Safe Symlink Teardown**: Always use `unlink` rather than `rm -f` when removing symbolic links to prevent any risk of modifying or recursively deleting contents inside the underlying target directory.
+-   **Dynamic Sandboxing**: Avoid hardcoded sandbox directories (e.g. `/tmp/run`). Generate unique sandbox folders dynamically using `mktemp -d` and trap their cleanups on exit.
+
+---
+
+## 7. Directory Layout Reference
+-   **`templates/`**: Core modular templates representing the Tiered Onboarding Framework (Org safety, Platform limits, Team overrides, and Provisioning guides).
+-   **`context/`**: Active session history tracking and state logs (e.g., `context/SESSION_STATE.md`).
+-   **`AGENTS.md`**: This master guidelines file.
