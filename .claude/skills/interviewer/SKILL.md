@@ -63,9 +63,9 @@ stays assistant-neutral by design.
   that don't apply (e.g. skip HPC partition questions for a cloud/Kubernetes platform).
 - **Phase 3**: compile and write the output files as described below.
 
-This skill only covers Tiers 1-3 (behavioral rules). Tier 4 (the deployment/provisioning
-guide) is a separate concern — hand that off to the **deployment** skill rather than
-trying to fill `deployment_workflow_template.md` yourself.
+This skill only covers Tiers 1-3 (behavioral rules). The deployment/provisioning guide
+is a separate concern, handled entirely by the **deployment** skill — hand it off there
+rather than trying to fill `deployment_workflow_template.md` yourself.
 
 ## Phase 3: agent-agnostic output, agent-specific pointers
 
@@ -97,6 +97,15 @@ etc.), labeled clearly by field name. This lets the **deployment** skill fill
 `deployment_workflow_template.md` later without re-asking questions the user already
 answered here — including which assistant(s) it should look up in its own
 `references/agent_cli_notes.md`.
+
+If the user mentions they already have previous tiered information — an existing
+filled-out `org_general.md` / `platform.md` / `team_preferences.md`, a prior `AGENTS.md`,
+or notes from an earlier onboarding round — don't silently merge or discard it. Record in
+`output/interview_profile.md`, under its own clearly labeled note, exactly what the user
+said they have (which tier(s) it covers, where it came from, and any values they gave
+from it). That keeps the provenance of pre-existing values visible to anyone — including
+the deployment skill — reading the profile later, instead of presenting reused values as
+if they came from this interview.
 
 Since `output/` is gitignored, real organizational details are fine to write there (this
 is not the "no institutional metadata" restriction — that restriction is specifically

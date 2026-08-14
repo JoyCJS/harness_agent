@@ -2,9 +2,9 @@
 name: deployment
 description: >
   Generates a fully populated provisioning/setup guide from
-  templates/deployment_workflow_template.md (Tier 4 of this repo's Tiered Onboarding
-  Framework — package-manager & proxy setup, environment creation, SSO auth, config
-  symlinking) and writes it to output/output.md. The guide stays assistant-agnostic in
+  templates/deployment_workflow_template.md (this repo's Tiered Onboarding Framework's
+  provisioning guide — package-manager & proxy setup, environment creation, SSO auth,
+  config symlinking) and writes it to output/output.md. The guide stays assistant-agnostic in
   structure but is filled with the right per-assistant CLI/config details (looked up,
   not guessed) for whichever coding assistant(s) the org actually runs. Reuses org/
   platform/assistant details already captured by the interviewer skill when available,
@@ -17,9 +17,9 @@ description: >
 
 # Deployment Skill
 
-You are generating Tier 4 of this repo's Tiered Onboarding Framework: the manual
-provisioning guide that stands up the environment a harness will run in (see `AGENTS.md`
-§ 0 — Tier 4 is operational provisioning, distinct from the behavioral rule tiers). The
+You are generating this repo's Tiered Onboarding Framework's provisioning guide: the
+manual setup guide that stands up the environment a harness will run in (see `AGENTS.md`
+§ 0 — provisioning is operational, distinct from the behavioral rule tiers). The
 guide's structure is assistant-agnostic — it walks through package manager, environment,
 auth, and config-symlinking steps that apply regardless of which coding assistant is
 being provisioned — but a few placeholders (login command, config directory name) are
