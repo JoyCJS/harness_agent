@@ -1,3 +1,16 @@
+## 2026-08-14
+
+**What happened**
+- Designed and wrote a comprehensive, well-structured `README.md` at the repository root tailored for GitHub contributors.
+- Highlighted the key "one-off project collaborations" workflow, demonstrating how teams can spin up ad-hoc project rules inheriting from the global framework while maintaining clean, project-level overrides.
+- Outlined the architecture of the Tiered Onboarding Framework, quick start guides for skills execution, and strict engineering standards for contributors (sourcing-safe shells, safe symlinks, and dynamic sandbox folders).
+
+**Decisions**
+- Structured the README to primarily target code contributors and open-source developers while maintaining clear usage instructions for sysadmins and development teams.
+
+**Next steps**
+- Present the README.md to the user for final review and prepare the repository for GitHub publication.
+
 ## 2026-08-13
 
 **What happened**
