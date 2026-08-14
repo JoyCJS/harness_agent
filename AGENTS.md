@@ -39,7 +39,8 @@ The harness is assembled per-deployment, tier by tier:
    rules that apply everywhere.
 2. **Tier 2** (`platform_template.md`) extends Tier 1 with the concrete compute/storage environment.
 3. **Tier 3** (`team_preferences_template.md`) narrows or overrides Tiers 1–2 for one team's conventions.
-4. **Tier 4** (`deployment_workflow_template.md`) is an operational provisioning guide, not a behavioral
+4. **The provisioning guide** (`deployment_workflow_template.md`, generated via
+   `.claude/skills/deployment/SKILL.md`) is operational provisioning, not a behavioral
    rule tier, used to stand up the environment the harness will run in.
 
 `onboarding_interviewer.md` is the prompt that interviews an administrator and assembles the filled
@@ -58,7 +59,7 @@ Coding assistants must operate safely across diverse environments—from physica
 1.  **Tier 1 (Organization General)**: Core safety, interaction trust, data security, and compliance constitutions.
 2.  **Tier 2 (Platform Environments)**: Resource default queues, nodes, filesystems, and repository mirrors.
 3.  **Tier 3 (Team Preferences)**: Language styles, Git read-only boundary controls, and explicit platform overrides for team isolation.
-4.  **Tier 4 (Deployment Workflows)**: Secure, proxy-aware manual provisioning guides with interactive SSO authentication.
+4.  **Deployment Workflows** (see `.claude/skills/deployment/SKILL.md`): Secure, proxy-aware manual provisioning guides with interactive SSO authentication.
 5.  **Master Interviewer Prompt**: An interactive setup prompter that empty agents can run to interview human administrators and generate filled, personalized rules files.
 
 ---
@@ -84,7 +85,7 @@ When editing or extending the templates inside the `templates/` directory, ensur
 -   **Platform Override Mechanism**: Contains explicit configuration blocks allowing teams to override or isolate temporary directories (e.g. forcing group-locked scratch paths) instead of using globally shared platform temp directories.
 -   **Technical Idioms**: Outlines sourcing-safe scripting, dynamic sandboxing (`mktemp`), safe symlink cleanup (`unlink`), and Conventional Commit conventions.
 
-### Tier 4: Environment Provisioning (`deployment_workflow_template.md`)
+### Environment Provisioning (`deployment_workflow_template.md`, see `.claude/skills/deployment/SKILL.md`)
 -   **Proxy & Mirror Setup**: Instructs on configuring environments behind enterprise firewalls using local proxy mirrors.
 -   **SSO Compliance**: Detail-oriented walkthrough for setting up native interactive browser/auth-code SSO logins to completely prevent raw API key fallbacks.
 -   **Quota Preservation**: Configures symbolic links from group storage directories back to the home directory for persistent rules and history storage.
@@ -108,7 +109,7 @@ Any future development and agent workflows on this project should focus on the f
 ### Milestone 1: Expanding Platform Environments (Tier 2 Expansion)
 -   Extend `platform_template.md` to provide pre-configured blocks for modern serverless architectures (AWS Fargate, Google Cloud Run) and standard Docker-compose developer setups.
 
-### Milestone 2: Multi-Language Package Manager Support (Tier 4 Expansion)
+### Milestone 2: Multi-Language Package Manager Support (Deployment Guide Expansion — see `.claude/skills/deployment/SKILL.md`)
 -   Extend `deployment_workflow_template.md` to support seamless proxy-aware configurations across multiple ecosystem tools (Poetry, pipenv, Cargo, NPM, Maven, and Go Modules).
 
 ### Milestone 3: Dynamic Onboarding Interviewer Enhancements
@@ -149,4 +150,34 @@ This is a generic, open-source project intended to be shared publicly across var
 ## 7. Directory Layout Reference
 -   **`templates/`**: Core modular templates representing the Tiered Onboarding Framework (Org safety, Platform limits, Team overrides, and Provisioning guides) — **assembled together, these ARE the agent harness (see § 0)**, not the source for one.
 -   **`context/`**: Active session history tracking and state logs (e.g., `context/SESSION_STATE.md`).
+-   **`.claude/skills/`**: Claude Code skill implementations (`interviewer`, `deployment`) that orchestrate the templates for one specific coding assistant's skill mechanism. These follow the agent-agnostic maintenance style in § 8: they produce agent-agnostic output (`AGENTS.md`, `output.md`) plus thin assistant-specific pointers/lookup tables, never assistant-specific rules baked into the output itself.
 -   **`AGENTS.md`**: This master guidelines file.
+
+---
+
+## 8. Agent-Agnostic Maintenance Style: One Core, Many Pointers
+
+This repo's own root `CLAUDE.md` demonstrates the standard this project follows whenever
+it produces or maintains files for a specific coding assistant: keep the substantive
+content in one agent-agnostic core, and confine anything assistant-specific to a thin,
+separately-scoped pointer.
+
+-   **The core stays generic.** `AGENTS.md` (this file, and the compiled Tier 1-3 output
+    the interviewer skill generates) is written for "an AI coding assistant" in the
+    abstract — never for one product by name. The same applies to everything in
+    `templates/`: none of the four templates should assume a specific assistant's config
+    format, CLI, or hook system.
+-   **Assistant-specific detail goes in a pointer or a lookup table, never inline.** A
+    pointer file (like root `CLAUDE.md`, or a generated `GEMINI.md`) is a few lines
+    deferring to the agent-agnostic core plus whatever mechanics are genuinely unique to
+    that assistant. A lookup table (like
+    `.claude/skills/interviewer/references/agent_targets.md` or
+    `.claude/skills/deployment/references/agent_cli_notes.md`) captures per-assistant
+    facts — where it reads its rules from, its login command — so that fact only has to
+    be looked up once, not re-derived or hardcoded into orchestration logic.
+-   **Never duplicate the core into a pointer.** If a pointer file starts accumulating
+    actual rules content instead of routing back to the core, that's a sign the content
+    belongs in the core and the pointer should shrink back down to a reference.
+
+Apply this same split to any future template, skill, or automation this project adds
+that touches more than one coding assistant.
