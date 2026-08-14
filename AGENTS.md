@@ -150,7 +150,7 @@ This is a generic, open-source project intended to be shared publicly across var
 ## 7. Directory Layout Reference
 -   **`templates/`**: Core modular templates representing the Tiered Onboarding Framework (Org safety, Platform limits, Team overrides, and Provisioning guides) — **assembled together, these ARE the agent harness (see § 0)**, not the source for one.
 -   **`context/`**: Active session history tracking and state logs (e.g., `context/SESSION_STATE.md`).
--   **`.agents/skills/`**: The canonical, agent-agnostic skill implementations (`interviewer`, `deployment`) that orchestrate the templates. These follow the agent-agnostic maintenance style in § 8: they produce agent-agnostic output (`AGENTS.md`, `output.md`) plus thin assistant-specific pointers/lookup tables, never assistant-specific rules baked into the output itself. Assistants with their own skill-discovery convention get a thin, assistant-specific reference back to this directory instead of a duplicated copy — e.g. `.claude/skills/interviewer` and `.claude/skills/deployment` are symlinks into `.agents/skills/`, so Claude Code's native skill loader (which only scans `.claude/skills/`) can find the same canonical files.
+-   **`.agents/skills/`**: The canonical, agent-agnostic skill implementations (`interviewer`, `deployment`) that orchestrate the templates. These follow the agent-agnostic maintenance style in § 8: they produce agent-agnostic output (`AGENTS.md`, `output.md`) plus thin assistant-specific pointers/lookup tables, never assistant-specific rules baked into the output itself. Assistants with their own skill-discovery convention get a thin, local reference back to this directory instead of a duplicated copy — e.g. Claude Code only scans `.claude/skills/`, so that path holds gitignored per-checkout stub `SKILL.md` files (frontmatter only, pointing back to the real file here) rather than committed copies; see `CLAUDE.md` for the exact mechanism and how to regenerate them.
 -   **`AGENTS.md`**: This master guidelines file.
 
 ---
@@ -176,9 +176,10 @@ separately-scoped pointer.
     facts — where it reads its rules from, its login command — so that fact only has to
     be looked up once, not re-derived or hardcoded into orchestration logic. The same
     split applies to the skills themselves: their substantive content lives once, under
-    the agent-agnostic `.agents/skills/`, and an assistant that needs its own
-    discovery path (e.g. Claude Code's `.claude/skills/`) gets a symlink there rather
-    than a second copy of the files.
+    the agent-agnostic `.agents/skills/`, and an assistant that needs its own discovery
+    path (e.g. Claude Code's `.claude/skills/`) gets a local, gitignored stub file there
+    (frontmatter plus a pointer back to the canonical file) rather than a second copy of
+    the files — see `CLAUDE.md` for the stub template.
 -   **Never duplicate the core into a pointer.** If a pointer file starts accumulating
     actual rules content instead of routing back to the core, that's a sign the content
     belongs in the core and the pointer should shrink back down to a reference.
