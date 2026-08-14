@@ -6,10 +6,52 @@ To ensure success and seamless integration of your changes, you must strictly ad
 
 ---
 
+## Start Here
+
+This repo is the source for **The Tiered Onboarding Framework** — see § 0 for what "agent harness"
+means here. Depending on what you were asked to do, go to one of these first:
+
+1. **Extend or edit the framework itself** (add a new tier, fix a template, update the roadmap):
+   edit the files under `templates/` — these are the source of truth (see § 2, § 7).
+2. **Generate a harness for a real org/team**: run `templates/onboarding_interviewer.md` as your
+   operating prompt — it interviews the user and fills the templates into output files.
+3. **Test that generation works** (no real org involved): same as above, but treat the profile as a
+   sample/test — write results into the gitignored `output/` directory, never hand-edit files there
+   directly (they're generated, not source).
+
+`output/` is generated and gitignored — never a source of truth. `templates/` is always the source
+of truth. If unsure which of the three you're doing, ask the user before proceeding.
+
+---
+
+## 0. Terminology: What "Agent Harness" Means In This Project
+
+In this repository, **"agent harness" does not mean application code that runs an LLM loop.**
+It means the assembled, tiered set of markdown guideline files in `templates/` themselves.
+Once populated for a specific organization/platform/team and loaded into a coding assistant's
+context — as its system prompt, `AGENTS.md`, `CLAUDE.md`, or equivalent — these tiers *are* the
+harness: they are what constrains and governs how the assistant is permitted to operate (what it
+may do autonomously, what compute/storage boundaries it must respect, what team conventions it
+must follow, and how its environment must be provisioned).
+
+The harness is assembled per-deployment, tier by tier:
+1. **Tier 1** (`org_general_template.md`) is the base layer — global safety, trust, and compliance
+   rules that apply everywhere.
+2. **Tier 2** (`platform_template.md`) extends Tier 1 with the concrete compute/storage environment.
+3. **Tier 3** (`team_preferences_template.md`) narrows or overrides Tiers 1–2 for one team's conventions.
+4. **Tier 4** (`deployment_workflow_template.md`) is an operational provisioning guide, not a behavioral
+   rule tier, used to stand up the environment the harness will run in.
+
+`onboarding_interviewer.md` is the prompt that interviews an administrator and assembles the filled
+tiers into the final harness file(s) — either one consolidated rules file, or the segmented per-tier
+files described in its Phase 3 — which is what actually gets loaded by the target coding assistant.
+
+---
+
 ## 1. Project Goal & Core Mission
 
 ### The Goal
-The primary goal of this project is to maintain and develop **The Tiered Onboarding Framework**. This framework is an open-source, modular, and customizable ruleset template system that enables software engineering teams, system administrators, and organizations to quickly configure and deploy secure, interactive, and platform-compliant coding assistant harnesses.
+The primary goal of this project is to maintain and develop **The Tiered Onboarding Framework**. This framework is an open-source, modular, and customizable ruleset template system that enables software engineering teams, system administrators, and organizations to quickly configure and deploy secure, interactive, and platform-compliant coding assistant harnesses **— where "harness" refers to this tiered markdown ruleset itself (see § 0), not a separate software runtime.**
 
 ### The Problem Solved
 Coding assistants must operate safely across diverse environments—from physical high-performance compute (HPC) clusters to enterprise cloud VPCs and Kubernetes federations. This project provides a hierarchical set of template bylaws that establish:
@@ -22,6 +64,8 @@ Coding assistants must operate safely across diverse environments—from physica
 ---
 
 ## 2. Tiered Framework Technical Specifications
+
+Each tier below is one layer of the assembled agent harness defined in § 0.
 
 When editing or extending the templates inside the `templates/` directory, ensure they satisfy these architectural specifications:
 
@@ -98,6 +142,6 @@ This is a generic, open-source project intended to be shared publicly across var
 ---
 
 ## 7. Directory Layout Reference
--   **`templates/`**: Core modular templates representing the Tiered Onboarding Framework (Org safety, Platform limits, Team overrides, and Provisioning guides).
+-   **`templates/`**: Core modular templates representing the Tiered Onboarding Framework (Org safety, Platform limits, Team overrides, and Provisioning guides) — **assembled together, these ARE the agent harness (see § 0)**, not the source for one.
 -   **`context/`**: Active session history tracking and state logs (e.g., `context/SESSION_STATE.md`).
 -   **`AGENTS.md`**: This master guidelines file.
