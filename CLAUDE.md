@@ -4,5 +4,7 @@ This project's canonical agent instructions live in [AGENTS.md](./AGENTS.md) —
 Everything below is Claude-Code-specific only; it does not replace or duplicate AGENTS.md.
 
 ## Claude-Code-specific notes
-_(none yet — this file exists so Claude Code's native auto-load convention has a home; add
-Claude-specific hooks/skills notes here if/when this repo grows any)_
+Skills (`interviewer`, `deployment`) live canonically under `.agents/skills/` so they stay
+agent-agnostic. Claude Code only discovers skills under `.claude/skills/`, so
+`.claude/skills/interviewer` and `.claude/skills/deployment` are symlinks into
+`.agents/skills/` — Claude-Code-specific plumbing, not a second copy of the content.
