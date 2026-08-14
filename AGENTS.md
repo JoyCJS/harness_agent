@@ -6,6 +6,24 @@ To ensure success and seamless integration of your changes, you must strictly ad
 
 ---
 
+## Start Here
+
+This repo is the source for **The Tiered Onboarding Framework** — see § 0 for what "agent harness"
+means here. Depending on what you were asked to do, go to one of these first:
+
+1. **Extend or edit the framework itself** (add a new tier, fix a template, update the roadmap):
+   edit the files under `templates/` — these are the source of truth (see § 2, § 7).
+2. **Generate a harness for a real org/team**: run `templates/onboarding_interviewer.md` as your
+   operating prompt — it interviews the user and fills the templates into output files.
+3. **Test that generation works** (no real org involved): same as above, but treat the profile as a
+   sample/test — write results into the gitignored `output/` directory, never hand-edit files there
+   directly (they're generated, not source).
+
+`output/` is generated and gitignored — never a source of truth. `templates/` is always the source
+of truth. If unsure which of the three you're doing, ask the user before proceeding.
+
+---
+
 ## 0. Terminology: What "Agent Harness" Means In This Project
 
 In this repository, **"agent harness" does not mean application code that runs an LLM loop.**
