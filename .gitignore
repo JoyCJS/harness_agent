@@ -1,0 +1,4 @@
+# Claude Code's local skill-discovery directory. Its contents are per-checkout stub
+# files that point at the canonical, agent-agnostic skills under .agents/skills/ (see
+# CLAUDE.md) — not shared repo content, so they're never committed.
+.claude/
