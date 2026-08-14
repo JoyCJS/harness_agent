@@ -151,4 +151,4 @@ If a new coding assistant joins the market, help us add support:
 
 ## 6. License & Community
 
-This project is licensed under the [MIT License](LICENSE). Contributions, bug reports, and suggestions are highly encouraged! Please open an issue or submit a pull request following our contributor guidelines.
+This project is licensed under the [GNU Affero General Public License v3 (AGPL-3.0)](LICENSE). Contributions, bug reports, and suggestions are highly encouraged! Please open an issue or submit a pull request following our contributor guidelines.
