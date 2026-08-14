@@ -94,6 +94,11 @@ When editing or extending the templates inside the `templates/` directory, ensur
 -   **Selective Interviewing**: Walking the user dynamically only through the template tiers that match their specific profile (skipping irrelevant cluster blocks for cloud users).
 -   **Generation Output**: Automatically compiles and outputs the final files based on the responses.
 
+### Agent Interaction & Output Requirements
+-   **Pre-Generation Verification**: The agent must explicitly request the organization's exact name and any applicable compliance or data-security requirements (e.g. HIPAA, GDPR, SOC2) from the user before generating any files or applying template values.
+-   **Organization-Specific Outputs**: Files such as `org_general.md` must be populated with organization-specific, user-provided values. Do not emit the org file as a generic template with placeholders or hallucinated claims about the organization.
+-   **Output Directory**: All generated files must be written to a single directory named `Output/` at the repository root (or a clearly named alternative chosen and confirmed by the user). The agent should list the generated files and their paths when finished.
+
 ---
 
 ## 3. Future Roadmap & Upcoming Milestones
