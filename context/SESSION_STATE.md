@@ -1,6 +1,10 @@
 ## 2026-08-14
 
 **What happened**
+- Modified `templates/onboarding_interviewer.md` (the core onboarding interviewer protocol) to support a Pre-Flight Auto-Scan phase, scanning for existing rules in the output directory and globally deployed biases (such as the main rules files under your home folder settings).
+- Integrated Onboarding & Extension Modes (New, Extend, and Test/Simulation runs) into Phase 1, offering a flexible start for teams with existing settings.
+- Added compare/evaluate directives in Phase 2 deep-dive, directing the assistant to focus on updates/changes rather than re-asking everything.
+- Added "Preserve Existing Values" guidelines in Phase 3 to prevent losing custom comments, sections, or overrides during files compilation.
 - Designed and wrote a comprehensive, well-structured `README.md` at the repository root tailored for GitHub contributors.
 - Highlighted the key "one-off project collaborations" workflow, demonstrating how teams can spin up ad-hoc project rules inheriting from the global framework while maintaining clean, project-level overrides.
 - Outlined the architecture of the Tiered Onboarding Framework, quick start guides for skills execution, and strict engineering standards for contributors (sourcing-safe shells, safe symlinks, and dynamic sandbox folders).
@@ -10,8 +14,7 @@
 - Structured the README to primarily target code contributors and open-source developers while maintaining clear usage instructions for sysadmins and development teams.
 
 **Next steps**
-- Stage and commit the final `README.md` and `context/SESSION_STATE.md` files.
-- Push the changes and publish the repository on GitHub.
+- Begin work on Milestone 1 (expanding `platform_template.md` to support modern serverless architectures like AWS Fargate/ECS and Google Cloud Run layouts).
 
 ## 2026-08-13
 
